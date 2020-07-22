@@ -2,6 +2,7 @@ package net.coagulate.SL.JSLBotBridge;
 
 import net.coagulate.JSLBot.JSLBot;
 import net.coagulate.JSLBot.LLCATruster;
+import net.coagulate.JSLBot.Packets.Types.LLUUID;
 import net.coagulate.SL.Config;
 import net.coagulate.SL.SLModule;
 
@@ -24,7 +25,7 @@ public class JSLBotBridge extends SLModule {
         }
     }
     public void initialise() {
-        LLCATruster.doNotUse(); // as in we use our own truster later on
+        //LLCATruster.doNotUse(); // as in we use our own truster later on
         bot = new JSLBot(getBotConfig());
         bot.registershutdownhook = false;
         bot.ALWAYS_RECONNECT = true;
@@ -48,7 +49,7 @@ public class JSLBotBridge extends SLModule {
         botconfig.put("password",Config.getBotPassword());
         botconfig.put("CnC.authoriser","OwnerOnly");
         botconfig.put("handlers",
-                "CnC,Sink,Health,Regions,Teleportation,Agent,Objects,Groups,net.coagulate.SL.Bots.BotInterface,net.coagulate.SL.Services.RegionMonitor"+".SimStats"
+                "CnC,Sink,Health,Regions,Teleportation,Agent,Objects,Groups" //todo ,net.coagulate.SL.Bots.BotInterface,net.coagulate.SL.Services.RegionMonitor"+".SimStats"
         );
         botconfig.put("loginlocation","home");
         botconfig.put("CnC.authorisation.owneruuid",Config.getBotOwnerUUID());
@@ -69,4 +70,16 @@ public class JSLBotBridge extends SLModule {
         }
     }
 
+    @Override
+    public Object weakInvoke(String command, Object... arguments) {
+        if (command.equalsIgnoreCase("IM")) {
+            bot.im(new LLUUID((String)arguments[0]),(String)arguments[1]);
+            return null;
+        }
+        if (command.equalsIgnoreCase("GROUPINVITE")) {
+            bot.api().groupInvite((String)arguments[0],(String)arguments[1],(String)arguments[2]);
+            return null;
+        }
+        return super.weakInvoke(command, arguments);
+    }
 }
