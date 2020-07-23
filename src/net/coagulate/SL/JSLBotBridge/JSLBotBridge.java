@@ -1,7 +1,6 @@
 package net.coagulate.SL.JSLBotBridge;
 
 import net.coagulate.JSLBot.JSLBot;
-import net.coagulate.JSLBot.LLCATruster;
 import net.coagulate.JSLBot.Packets.Types.LLUUID;
 import net.coagulate.SL.Config;
 import net.coagulate.SL.SLModule;
@@ -21,7 +20,8 @@ public class JSLBotBridge extends SLModule {
 
     public void shutdown() {
         if (bot != null) {
-            bot.shutdown("SL System is shutting down");
+            JSLBot reference=bot; bot=null;
+            reference.shutdown("SL System is shutting down");
         }
     }
     public void initialise() {
@@ -35,9 +35,7 @@ public class JSLBotBridge extends SLModule {
     @Override
     public void maintenance() {}
 
-    public void startup() {
-        waitBot();
-    }
+    public void startup() {} //waitBot();
     private static BotConfig botconfig=null;
     @Nonnull
     public static BotConfig getBotConfig() {
