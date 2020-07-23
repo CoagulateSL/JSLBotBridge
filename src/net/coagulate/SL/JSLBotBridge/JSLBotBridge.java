@@ -35,7 +35,7 @@ public class JSLBotBridge extends SLModule {
     @Override
     public void maintenance() {}
 
-    public void startup() {} //waitBot();
+    public void startup() { waitBot(); }
     private static BotConfig botconfig=null;
     @Nonnull
     public static BotConfig getBotConfig() {
