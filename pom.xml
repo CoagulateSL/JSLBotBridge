@@ -9,7 +9,18 @@
     <groupId>net.coagulate.SL</groupId>
     <artifactId>JSLBotBridge</artifactId>
     <version>0.1.0</version>
-
+    <repositories>
+        <repository>
+            <id>jslbot</id>
+            <name>GitHub CoagulateSL/JSLBot Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/CoagulateSL/JavaCore</url>
+        </repository>
+        <repository>
+            <id>slcore</id>
+            <name>GitHub CoagulateSL/SLCore Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/CoagulateSL/SLCore</url>
+        </repository>
+    </repositories>
     <build>
         <directory>${project.basedir}/bin</directory>
         <outputDirectory>${project.basedir}/out</outputDirectory>
@@ -46,9 +57,9 @@
             <version>1.0.0</version>
         </dependency>
         <dependency>
-            <groupId>net.coagulate</groupId>
+            <groupId>net.coagulate.SL</groupId>
             <artifactId>JSLBot</artifactId>
-            <version>0.8.1</version>
+            <version>0.9.0</version>
         </dependency>
     </dependencies>
     <properties>
