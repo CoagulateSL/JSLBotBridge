@@ -9,6 +9,13 @@
     <groupId>net.coagulate.SL</groupId>
     <artifactId>JSLBotBridge</artifactId>
     <version>0.1.0</version>
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub CoagulateSL/JSLBotBridge Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/CoagulateSL/JSLBotBridge</url>
+        </repository>
+    </distributionManagement>         
     <repositories>
         <repository>
             <id>jslbot</id>
