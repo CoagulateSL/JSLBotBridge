@@ -12,7 +12,7 @@ import java.util.Set;
  */
 public class BotConfig extends Configuration {
 
-    Map<String,String> config=new HashMap<>();
+    final Map<String,String> config=new HashMap<>();
     @Nullable
     @Override
     public String get(String param) {
