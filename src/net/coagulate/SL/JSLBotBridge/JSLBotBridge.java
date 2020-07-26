@@ -1,8 +1,10 @@
 package net.coagulate.SL.JSLBotBridge;
 
+import net.coagulate.Core.Database.DBConnection;
 import net.coagulate.JSLBot.JSLBot;
 import net.coagulate.JSLBot.Packets.Types.LLUUID;
 import net.coagulate.SL.Config;
+import net.coagulate.SL.SL;
 import net.coagulate.SL.SLModule;
 
 import javax.annotation.Nonnull;
@@ -26,6 +28,7 @@ public class JSLBotBridge extends SLModule {
     }
     public void initialise() {
         //LLCATruster.doNotUse(); // as in we use our own truster later on
+        schemaCheck(SL.getDB(),"jslbotbridge",1);
         bot = new JSLBot(getBotConfig());
         bot.registershutdownhook = false;
         bot.ALWAYS_RECONNECT = true;
@@ -80,5 +83,10 @@ public class JSLBotBridge extends SLModule {
             return null;
         }
         return super.weakInvoke(command, arguments);
+    }
+
+    @Override
+    protected int schemaUpgrade(DBConnection db, String schemaname, int currentversion) {
+        return currentversion;
     }
 }
