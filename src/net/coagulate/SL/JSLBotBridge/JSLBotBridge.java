@@ -1,6 +1,7 @@
 package net.coagulate.SL.JSLBotBridge;
 
 import net.coagulate.Core.Database.DBConnection;
+import net.coagulate.Core.Tools.ClassTools;
 import net.coagulate.JSLBot.JSLBot;
 import net.coagulate.JSLBot.Packets.Types.LLUUID;
 import net.coagulate.SL.Config;
@@ -8,6 +9,8 @@ import net.coagulate.SL.SL;
 import net.coagulate.SL.SLModule;
 
 import javax.annotation.Nonnull;
+import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 
 public class JSLBotBridge extends SLModule {
 
@@ -28,6 +31,20 @@ public class JSLBotBridge extends SLModule {
     }
     public void initialise() {
         //LLCATruster.doNotUse(); // as in we use our own truster later on
+        for (Method method:ClassTools.getAnnotatedMethods(JSLBot.CmdHelp.class)) {
+            boolean warned=false;
+            boolean firstparam=true;
+            for (Parameter param:method.getParameters()) {
+                if (firstparam) {
+                    firstparam=false;
+                } else {
+                    if (!warned && !param.isAnnotationPresent(JSLBot.Param.class)) {
+                        SL.log("JSLBotBridge").severe("Malformed JSLBot CmdHelp/Param annotations in " + method.getDeclaringClass().getCanonicalName() + "." + method.getName());
+                        warned = true;
+                    }
+                }
+            }
+        }
         schemaCheck(SL.getDB(),"jslbotbridge",1);
         bot = new JSLBot(getBotConfig());
         bot.registershutdownhook = false;
