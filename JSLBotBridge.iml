@@ -13,7 +13,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Maven: com.google.code.findbugs:jsr305:3.0.2" level="project" />
-    <orderEntry type="module" module-name="SLCore" />
+    <orderEntry type="library" name="Maven: net.coagulate.SL:SLCore:1.0.1" level="project" />
     <orderEntry type="module" module-name="JavaCore" />
     <orderEntry type="library" name="Maven: javax.mail:javax.mail-api:1.6.2" level="project" />
     <orderEntry type="library" name="Maven: org.mariadb.jdbc:mariadb-java-client:2.5.4" level="project" />
@@ -24,7 +24,7 @@
     <orderEntry type="library" name="Maven: javax.mail:mail:1.4.7" level="project" />
     <orderEntry type="library" name="Maven: javax.activation:activation:1.1" level="project" />
     <orderEntry type="library" name="Maven: org.json:json:20160810" level="project" />
-    <orderEntry type="module" module-name="JSLBot" />
+    <orderEntry type="library" name="Maven: net.coagulate.SL:JSLBot:0.9.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpcore-nio:4.4.13" level="project" />
     <orderEntry type="library" name="Maven: org.apache.xmlrpc:xmlrpc-client:3.1.3" level="project" />
     <orderEntry type="library" name="Maven: javax.xml.bind:jaxb-api:2.3.1" level="project" />
