@@ -14,6 +14,14 @@ import java.lang.reflect.Parameter;
 
 public class JSLBotBridge extends SLModule {
 
+    public static final int MAJORVERSION=0;
+    public static final int MINORVERSION=1;
+    public static final int BUGFIXVERSION=7;
+    public static final String COMMITID ="MANUAL";
+    public final int majorVersion() { return MAJORVERSION; }
+    public final int minorVersion() { return MINORVERSION; }
+    public final int bugFixVersion() { return BUGFIXVERSION; }
+    public final String commitId() { return COMMITID; }
     JSLBot bot=null;
 
     @Nonnull
