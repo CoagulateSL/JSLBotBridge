@@ -29,6 +29,7 @@ public class JSLBotBridge extends SLModule {
     public String getName() {
         return "JSLBotBridge";
     }
+    @Nonnull
     public String getDescription() { return "JSLBot bridge module for core SL services"; }
 
     public void shutdown() {
