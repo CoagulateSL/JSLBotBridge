@@ -96,7 +96,7 @@ public class JSLBotBridge extends SLModule {
         try {
             bot.getLogger("waitConnection").config("Waiting for JSLBridge bot to connect");
             bot.waitConnection(30000);
-        } catch (@Nonnull final IllegalStateException e) {
+        } catch (@Nonnull final IllegalStateException ignored) {
         }
         if (!bot.connected()) {
             bot.shutdown("Failed to connect");
