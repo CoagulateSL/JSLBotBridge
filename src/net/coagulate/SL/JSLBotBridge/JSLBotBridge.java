@@ -36,8 +36,8 @@ public class JSLBotBridge extends SLModule {
     public String getDescription() { return "JSLBot bridge module for core SL services"; }
 
     public void shutdown() {
-        if (bot != null) {
-            JSLBot reference= bot; bot(null);
+        if (bot() != null) {
+            JSLBot reference= bot(); bot(null);
             reference.shutdown("SL System is shutting down");
         }
     }
