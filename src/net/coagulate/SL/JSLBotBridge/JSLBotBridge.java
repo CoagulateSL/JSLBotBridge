@@ -11,8 +11,6 @@ import net.coagulate.SL.SLModule;
 import javax.annotation.Nonnull;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
-import java.util.Calendar;
-import java.util.Date;
 
 public class JSLBotBridge extends SLModule {
 
@@ -24,8 +22,7 @@ public class JSLBotBridge extends SLModule {
     public final int minorVersion() { return MINORVERSION; }
     public final int bugFixVersion() { return BUGFIXVERSION; }
     public final String commitId() { return COMMITID; }
-    private JSLBot bot=null;
-    private Date lastbot=new Date();
+    JSLBot bot=null;
 
     @Nonnull
     @Override
@@ -36,8 +33,8 @@ public class JSLBotBridge extends SLModule {
     public String getDescription() { return "JSLBot bridge module for core SL services"; }
 
     public void shutdown() {
-        if (bot() != null) {
-            JSLBot reference= bot(); bot(null);
+        if (bot != null) {
+            JSLBot reference=bot; bot=null;
             reference.shutdown("SL System is shutting down");
         }
     }
@@ -58,25 +55,20 @@ public class JSLBotBridge extends SLModule {
             }
         }
         schemaCheck(SL.getDB(),"jslbotbridge",1);
-        //bot().start();
+        bot = new JSLBot(getBotConfig());
+        bot.registershutdownhook = false;
+        bot.ALWAYS_RECONNECT = true;
+        bot.start();
     }
 
     @Override
-    public void maintenance() {
-        if (bot == null) { return; }
-        if (nextRun("JSLBotBridge-maintenance-idle",60)) {
-            Calendar ago=Calendar.getInstance();
-            ago.add(Calendar.MINUTE,-1);
-            if (lastbot.before(ago.getTime())) {
-                JSLBot shutdown=bot;
-                bot=null;
-                shutdown.clearReconnect();
-                shutdown.shutdown("Idle timeout");
-            }
+    public void maintenance() {}
+
+    public void startup() {
+        if (!Config.getDevelopment()) {
+            waitBot();
         }
     }
-
-    public void startup() { }
 
     private static BotConfig botconfig=null;
     @Nonnull
@@ -102,23 +94,23 @@ public class JSLBotBridge extends SLModule {
 
     private void waitBot() {
         try {
-            bot().getLogger("waitConnection").config("Waiting for JSLBridge bot to connect");
-            bot().waitConnection(30000);
-        } catch (@Nonnull final IllegalStateException ignored) {
+            bot.getLogger("waitConnection").config("Waiting for JSLBridge bot to connect");
+            bot.waitConnection(30000);
+        } catch (@Nonnull final IllegalStateException e) {
         }
-        if (!bot().connected()) {
-            bot().shutdown("Failed to connect");
+        if (!bot.connected()) {
+            bot.shutdown("Failed to connect");
         }
     }
 
     @Override
     public Object weakInvoke(String command, Object... arguments) {
         if (command.equalsIgnoreCase("IM")) {
-            bot().im(new LLUUID((String)arguments[0]),(String)arguments[1]);
+            bot.im(new LLUUID((String)arguments[0]),(String)arguments[1]);
             return null;
         }
         if (command.equalsIgnoreCase("GROUPINVITE")) {
-            bot().api().groupInvite((String)arguments[0],(String)arguments[1],(String)arguments[2]);
+            bot.api().groupInvite((String)arguments[0],(String)arguments[1],(String)arguments[2]);
             return null;
         }
         return super.weakInvoke(command, arguments);
@@ -127,21 +119,5 @@ public class JSLBotBridge extends SLModule {
     @Override
     protected int schemaUpgrade(DBConnection db, String schemaname, int currentversion) {
         return currentversion;
-    }
-
-    private JSLBot bot() {
-        lastbot=new Date();
-        if (bot!=null) { return bot; }
-        bot(new JSLBot(getBotConfig()));
-        bot.registershutdownhook = false;
-        bot.ALWAYS_RECONNECT = false;
-        bot.start();
-        bot.waitConnection(10000);
-        return bot;
-    }
-
-    private void bot(JSLBot bot) {
-        this.bot = bot;
-        lastbot=new Date();
     }
 }
