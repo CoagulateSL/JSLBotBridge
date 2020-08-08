@@ -90,6 +90,7 @@ public class JSLBotBridge extends SLModule {
         botconfig.put("CnC.privatecommandprefix","*");
         botconfig.put("CnC.homesickfor",Config.getBotHomeRegion());
         botconfig.put("loginuri",Config.getJSLBotBridgeLoginURI());
+        if (!Config.getJSLBotBridgeSeat().isBlank()) { botconfig.put("homeseat",Config.getJSLBotBridgeSeat()); }
         return botconfig;
     }
 
