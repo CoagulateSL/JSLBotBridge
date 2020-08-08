@@ -54,7 +54,7 @@ public class JSLBotBridge extends SLModule {
                 }
             }
         }
-        schemaCheck(SL.getDB(),"jslbotbridge",1);
+        // schemaCheck(SL.getDB(),"jslbotbridge",1); // seems pointless for the moment
         bot = new JSLBot(getBotConfig());
         bot.registershutdownhook = false;
         bot.ALWAYS_RECONNECT = true;
@@ -89,6 +89,7 @@ public class JSLBotBridge extends SLModule {
         botconfig.put("CnC.publiccommandprefix","*");
         botconfig.put("CnC.privatecommandprefix","*");
         botconfig.put("CnC.homesickfor",Config.getBotHomeRegion());
+        botconfig.put("loginuri",Config.getJSLBotBridgeLoginURI());
         return botconfig;
     }
 
