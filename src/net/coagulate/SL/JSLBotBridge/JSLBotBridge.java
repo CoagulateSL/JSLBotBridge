@@ -1,5 +1,6 @@
 package net.coagulate.SL.JSLBotBridge;
 
+import net.coagulate.Core.BuildInfo.JSLBotBridgeBuildInfo;
 import net.coagulate.Core.Database.DBConnection;
 import net.coagulate.Core.Tools.ClassTools;
 import net.coagulate.JSLBot.JSLBot;
@@ -11,17 +12,15 @@ import net.coagulate.SL.SLModule;
 import javax.annotation.Nonnull;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
+import java.util.Date;
 
 public class JSLBotBridge extends SLModule {
+    public final int majorVersion() { return JSLBotBridgeBuildInfo.MAJORVERSION; }
+    public final int minorVersion() { return JSLBotBridgeBuildInfo.MINORVERSION; }
+    public final int bugFixVersion() { return JSLBotBridgeBuildInfo.BUGFIXVERSION; }
+    public final String commitId() { return JSLBotBridgeBuildInfo.COMMITID; }
+    public final Date getBuildDate() { return JSLBotBridgeBuildInfo.BUILDDATE; }
 
-    public static final int MAJORVERSION=0;
-    public static final int MINORVERSION=1;
-    public static final int BUGFIXVERSION=7;
-    public static final String COMMITID ="MANUAL";
-    public final int majorVersion() { return MAJORVERSION; }
-    public final int minorVersion() { return MINORVERSION; }
-    public final int bugFixVersion() { return BUGFIXVERSION; }
-    public final String commitId() { return COMMITID; }
     JSLBot bot=null;
 
     @Nonnull
