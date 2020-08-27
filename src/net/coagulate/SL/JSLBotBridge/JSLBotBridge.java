@@ -6,13 +6,16 @@ import net.coagulate.Core.Tools.ClassTools;
 import net.coagulate.JSLBot.JSLBot;
 import net.coagulate.JSLBot.Packets.Types.LLUUID;
 import net.coagulate.SL.Config;
+import net.coagulate.SL.HTML.ServiceTile;
 import net.coagulate.SL.SL;
 import net.coagulate.SL.SLModule;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.Date;
+import java.util.Map;
 
 public class JSLBotBridge extends SLModule {
     public final int majorVersion() { return JSLBotBridgeBuildInfo.MAJORVERSION; }
@@ -22,6 +25,12 @@ public class JSLBotBridge extends SLModule {
     public final Date getBuildDate() { return JSLBotBridgeBuildInfo.BUILDDATE; }
 
     JSLBot bot=null;
+
+    @Nullable
+    @Override
+    public Map<ServiceTile, Integer> getServices() {
+        return null;
+    }
 
     @Nonnull
     @Override
@@ -118,7 +127,7 @@ public class JSLBotBridge extends SLModule {
     }
 
     @Override
-    protected int schemaUpgrade(DBConnection db, String schemaname, int currentversion) {
-        return currentversion;
+    protected int schemaUpgrade(DBConnection db, String schemaName, int currentVersion) {
+        return currentVersion;
     }
 }
