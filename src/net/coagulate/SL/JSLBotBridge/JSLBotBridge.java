@@ -6,6 +6,7 @@ import net.coagulate.Core.Tools.ClassTools;
 import net.coagulate.JSLBot.JSLBot;
 import net.coagulate.JSLBot.Packets.Types.LLUUID;
 import net.coagulate.SL.Config;
+import net.coagulate.SL.Data.EventQueue;
 import net.coagulate.SL.HTML.ServiceTile;
 import net.coagulate.SL.SL;
 import net.coagulate.SL.SLModule;
@@ -110,6 +111,15 @@ public class JSLBotBridge extends SLModule {
         }
         if (!bot.connected()) {
             bot.shutdown("Failed to connect");
+        }
+    }
+
+    @Override
+    public void processEvent(EventQueue event) {
+        if (event.getCommandName().equalsIgnoreCase("im")) {
+            event.claim();
+            bot.im(new LLUUID(event.getData().getString("uuid")),event.getData().getString("message"));
+            event.complete("Sent");
         }
     }
 
