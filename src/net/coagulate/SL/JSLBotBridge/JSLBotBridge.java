@@ -119,7 +119,7 @@ public class JSLBotBridge extends SLModule {
         if (event.getCommandName().equalsIgnoreCase("im")) {
             event.claim();
             bot.im(new LLUUID(event.getData().getString("uuid")),event.getData().getString("message"));
-            event.complete("Sent");
+            event.complete();
         }
     }
 
