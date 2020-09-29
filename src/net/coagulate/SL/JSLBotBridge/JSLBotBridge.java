@@ -51,13 +51,12 @@ public class JSLBotBridge extends SLModule {
         }
     }
     public void initialise() {
-        //LLCATruster.doNotUse(); // as in we use our own truster later on
         for (Method method:ClassTools.getAnnotatedMethods(JSLBot.CmdHelp.class)) {
             boolean warned=false;
-            boolean firstparam=true;
+            boolean firstParam=true;
             for (Parameter param:method.getParameters()) {
-                if (firstparam) {
-                    firstparam=false;
+                if (firstParam) {
+                    firstParam=false;
                 } else {
                     if (!warned && !param.isAnnotationPresent(JSLBot.Param.class)) {
                         SL.log("JSLBotBridge").severe("Malformed JSLBot CmdHelp/Param annotations in " + method.getDeclaringClass().getCanonicalName() + "." + method.getName());
@@ -126,11 +125,11 @@ public class JSLBotBridge extends SLModule {
         }
         if (event.getCommandName().equalsIgnoreCase("recalcnames")) {
             event.claim();
-            if (recalcthread!=null && recalcthread.isAlive()) {
+            if (recalcThread !=null && recalcThread.isAlive()) {
                 event.complete("RecalcThreadAlive");
             } else {
-                recalcthread=new RecalcThread(event);
-                recalcthread.start();
+                recalcThread =new RecalcThread(event);
+                recalcThread.start();
             }
         }
     }
@@ -153,11 +152,11 @@ public class JSLBotBridge extends SLModule {
         return currentVersion;
     }
 
-    private static Thread recalcthread=null;
+    private static Thread recalcThread =null;
 
 
     private class RecalcThread extends Thread {
-        private int casecorrections=0;
+        private int caseCorrections =0;
         private int renames=0;
         private int unknowns=0;
         private int noop=0;
@@ -165,36 +164,36 @@ public class JSLBotBridge extends SLModule {
             Logger log=SL.log("AvatarNameRecalc");
             log.info("Starting!");
             int processed=0;
-            int lastreport= UnixTime.getUnixTime();
-            int starttime=lastreport;
-            Set<User> allusers=User.getAllUsers();
-            List<String> searchfor=new ArrayList<>(10);
-            for (User user:allusers) {
-                if (user.getUUID().length()==36) { searchfor.add(user.getUUID()); }
+            int lastReport= UnixTime.getUnixTime();
+            int startTime=lastReport;
+            Set<User> allUsers=User.getAllUsers();
+            List<String> searchFor=new ArrayList<>(10);
+            for (User user:allUsers) {
+                if (user.getUUID().length()==36) { searchFor.add(user.getUUID()); }
                 processed++;
                 if ((processed % 10) ==0 ) {
-                    doLookup(searchfor);
-                    searchfor.clear();
+                    doLookup(searchFor);
+                    searchFor.clear();
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException ignore) {
                     }
-                    if ((UnixTime.getUnixTime() - lastreport) > 60) {
-                        lastreport = UnixTime.getUnixTime();
-                        double usersPerSecond = (((double) processed) / ((double) (lastreport - starttime)));
-                        double expectRunTime = ((double) (allusers.size() - processed)) / usersPerSecond;
+                    if ((UnixTime.getUnixTime() - lastReport) > 60) {
+                        lastReport = UnixTime.getUnixTime();
+                        double usersPerSecond = (((double) processed) / ((double) (lastReport - startTime)));
+                        double expectRunTime = ((double) (allUsers.size() - processed)) / usersPerSecond;
                         int eta = (int) expectRunTime;
-                        log.info("Processed " + processed + "/" + allusers.size() + ".  ETA: " + UnixTime.duration(eta, true));
+                        log.info("Processed " + processed + "/" + allUsers.size() + ".  ETA: " + UnixTime.duration(eta, true));
                     }
                 }
             }
-            if (!searchfor.isEmpty()) { doLookup(searchfor); }
-            log.info("Exiting - processed "+processed+" with "+renames+" renames and "+casecorrections+" case corrections. "+unknowns+" failed to lookup. "+noop+" NOOPs.");
+            if (!searchFor.isEmpty()) { doLookup(searchFor); }
+            log.info("Exiting - processed "+processed+" in "+UnixTime.duration(UnixTime.getUnixTime()-startTime,true)+" with "+renames+" renames, "+ caseCorrections +" case corrections, "+unknowns+" failed lookups and "+noop+" NOOPs.");
             event.complete();
         }
 
-        private void doLookup(List<String> searchfor) {
-            Map<String,String> map=((Avatars)(bot.brain().getHandler("Avatars"))).resolveUUIDStrings(searchfor);
+        private void doLookup(List<String> searchFor) {
+            Map<String,String> map=((Avatars)(bot.brain().getHandler("Avatars"))).resolveUUIDStrings(searchFor);
             for (Map.Entry<String,String> entry:map.entrySet()) {
                 String uuid=entry.getKey();
                 String username=entry.getValue();
@@ -207,11 +206,10 @@ public class JSLBotBridge extends SLModule {
                         if (!user.getUsername().equalsIgnoreCase(username)) {
                             SL.log("AvatarNameRecalc").info("Avatar rename for " + uuid + " from " + user.getUsername() + " to " + username);
                             renames++;
-                            user.setUsername(username);
                         } else {
-                            casecorrections++;
-                            user.setUsername(username);
+                            caseCorrections++;
                         }
+                        user.setUsername(username);
                     } else { noop++; }
                 }
             }
