@@ -159,6 +159,7 @@ public class JSLBotBridge extends SLModule {
     private class RecalcThread extends Thread {
         private int casecorrections=0;
         private int renames=0;
+        private int unknowns=0;
         public RecalcThread(EventQueue event) {
             Logger log=SL.log("AvatarNameRecalc");
             log.info("Starting!");
@@ -187,7 +188,7 @@ public class JSLBotBridge extends SLModule {
                 }
             }
             if (!searchfor.isEmpty()) { doLookup(searchfor); }
-            log.info("Exiting - processed "+processed+" with "+renames+" renames and "+casecorrections+" case corrections");
+            log.info("Exiting - processed "+processed+" with "+renames+" renames and "+casecorrections+" case corrections. "+unknowns+" failed to lookup.");
             event.complete();
         }
 
@@ -198,6 +199,7 @@ public class JSLBotBridge extends SLModule {
                 String username=entry.getValue();
                 if (username==null) {
                     SL.log("AvatarNameRecalc").warning("Failed to get an avatar name for " + uuid);
+                    unknowns++;
                 } else {
                     User user = User.findUserKey(uuid);
                     if (!user.getUsername().equals(username)) {
