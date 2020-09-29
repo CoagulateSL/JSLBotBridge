@@ -160,6 +160,7 @@ public class JSLBotBridge extends SLModule {
         private int renames=0;
         private int unknowns=0;
         private int noop=0;
+
         public RecalcThread(EventQueue event) {
             Logger log=SL.log("AvatarNameRecalc");
             log.info("Starting!");
@@ -168,8 +169,9 @@ public class JSLBotBridge extends SLModule {
             int startTime=lastReport;
             Set<User> allUsers=User.getAllUsers();
             List<String> searchFor=new ArrayList<>(10);
+            int oddLength = 0;
             for (User user:allUsers) {
-                if (user.getUUID().length()==36) { searchFor.add(user.getUUID()); }
+                if (user.getUUID().length()==36) { searchFor.add(user.getUUID()); } else { oddLength++; }
                 processed++;
                 if ((processed % 10) ==0 ) {
                     doLookup(searchFor);
@@ -188,7 +190,7 @@ public class JSLBotBridge extends SLModule {
                 }
             }
             if (!searchFor.isEmpty()) { doLookup(searchFor); }
-            log.info("Exiting - processed "+processed+" in "+UnixTime.duration(UnixTime.getUnixTime()-startTime,true)+" with "+renames+" renames, "+ caseCorrections +" case corrections, "+unknowns+" failed lookups and "+noop+" NOOPs.");
+            log.info("Exiting - processed "+processed+" in "+UnixTime.duration(UnixTime.getUnixTime()-startTime,true)+" with "+renames+" renames, "+ caseCorrections +" case corrections, "+unknowns+" failed lookups,"+ oddLength +" odd lengths and "+noop+" NOOPs.");
             event.complete();
         }
 
