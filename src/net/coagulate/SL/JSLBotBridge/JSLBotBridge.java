@@ -160,6 +160,7 @@ public class JSLBotBridge extends SLModule {
         private int casecorrections=0;
         private int renames=0;
         private int unknowns=0;
+        private int noop=0;
         public RecalcThread(EventQueue event) {
             Logger log=SL.log("AvatarNameRecalc");
             log.info("Starting!");
@@ -169,7 +170,7 @@ public class JSLBotBridge extends SLModule {
             Set<User> allusers=User.getAllUsers();
             List<String> searchfor=new ArrayList<>(10);
             for (User user:allusers) {
-                searchfor.add(user.getUUID());
+                if (user.getUUID().length()==36) { searchfor.add(user.getUUID()); }
                 processed++;
                 if ((processed % 10) ==0 ) {
                     doLookup(searchfor);
@@ -188,7 +189,7 @@ public class JSLBotBridge extends SLModule {
                 }
             }
             if (!searchfor.isEmpty()) { doLookup(searchfor); }
-            log.info("Exiting - processed "+processed+" with "+renames+" renames and "+casecorrections+" case corrections. "+unknowns+" failed to lookup.");
+            log.info("Exiting - processed "+processed+" with "+renames+" renames and "+casecorrections+" case corrections. "+unknowns+" failed to lookup. "+noop+" NOOPs.");
             event.complete();
         }
 
@@ -203,14 +204,15 @@ public class JSLBotBridge extends SLModule {
                 } else {
                     User user = User.findUserKey(uuid);
                     if (!user.getUsername().equals(username)) {
-                        user.setUsername(username);
                         if (!user.getUsername().equalsIgnoreCase(username)) {
                             SL.log("AvatarNameRecalc").info("Avatar rename for " + uuid + " from " + user.getUsername() + " to " + username);
                             renames++;
+                            user.setUsername(username);
                         } else {
                             casecorrections++;
+                            user.setUsername(username);
                         }
-                    }
+                    } else { noop++; }
                 }
             }
         }
