@@ -149,6 +149,7 @@ public class JSLBotBridge extends SLModule {
 
     @Override
     protected int schemaUpgrade(DBConnection db, String schemaName, int currentVersion) {
+        // this entire function is not called (see initialise())
         return currentVersion;
     }
 
