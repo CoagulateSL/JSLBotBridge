@@ -6,7 +6,7 @@
 
     <groupId>net.coagulate.SL</groupId>
     <artifactId>JSLBotBridge</artifactId>
-    <version>0.1.9</version>
+    <version>0.1.10</version>
     <build>
         <directory>${project.basedir}/bin</directory>
         <outputDirectory>${project.basedir}/out</outputDirectory>
