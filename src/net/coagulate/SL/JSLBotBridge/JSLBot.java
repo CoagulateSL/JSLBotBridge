@@ -37,6 +37,8 @@ public class JSLBot extends SLModule {
     public void initialise() {}
     @Override
     public void maintenance() {}
+    @Override
+    public void maintenanceInternal() {}
 
     public void startup() {}
 
