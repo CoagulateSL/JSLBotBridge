@@ -79,9 +79,9 @@ public class JSLBotBridge extends SLModule {
     public void maintenanceInternal() {}
 
     public void startup() {
-        if (!Config.getDevelopment()) {
+        //if (!Config.getDevelopment()) {
             waitBot();
-        }
+        //}
     }
 
     private static BotConfig botconfig=null;
