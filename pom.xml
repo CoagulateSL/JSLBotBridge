@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>net.coagulate.SL</groupId>
-    <artifactId>JSLBotBridge</artifactId>
+    <artifactId>jslbotbridge</artifactId>
     <version>0.1.10</version>
     <repositories>
         <repository>
