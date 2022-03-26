@@ -11,9 +11,6 @@ import java.util.Date;
 import java.util.Map;
 
 public class JSLBot extends SLModule {
-    public final int majorVersion() { return JSLBotBuildInfo.MAJORVERSION; }
-    public final int minorVersion() { return JSLBotBuildInfo.MINORVERSION; }
-    public final int bugFixVersion() { return JSLBotBuildInfo.BUGFIXVERSION; }
     public final String commitId() { return JSLBotBuildInfo.COMMITID; }
     public final Date getBuildDate() { return JSLBotBuildInfo.BUILDDATE; }
 

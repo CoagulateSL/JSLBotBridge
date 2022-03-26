@@ -22,9 +22,6 @@ import java.util.*;
 import java.util.logging.Logger;
 
 public class JSLBotBridge extends SLModule {
-    public final int majorVersion() { return JSLBotBridgeBuildInfo.MAJORVERSION; }
-    public final int minorVersion() { return JSLBotBridgeBuildInfo.MINORVERSION; }
-    public final int bugFixVersion() { return JSLBotBridgeBuildInfo.BUGFIXVERSION; }
     public final String commitId() { return JSLBotBridgeBuildInfo.COMMITID; }
     public final Date getBuildDate() { return JSLBotBridgeBuildInfo.BUILDDATE; }
 
