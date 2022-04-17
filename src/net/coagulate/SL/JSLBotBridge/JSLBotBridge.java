@@ -119,17 +119,17 @@ public class JSLBotBridge extends SLModule {
 
     @Override
     public void processEvent(final EventQueue event) {
-        if (event.getCommandName().equalsIgnoreCase("im")) {
+        if ("im".equalsIgnoreCase(event.getCommandName())) {
             event.claim();
             bot.im(new LLUUID(event.getData().getString("uuid")), event.getData().getString("message"));
             event.complete();
         }
-        if (event.getCommandName().equalsIgnoreCase("recalcnames")) {
+        if ("recalcnames".equalsIgnoreCase(event.getCommandName())) {
             event.claim();
             if (recalcThread != null && recalcThread.isAlive()) {
                 event.complete("RecalcThreadAlive");
             } else {
-                recalcThread =new RecalcThread(event);
+                recalcThread = new RecalcThread(event);
                 recalcThread.start();
             }
         }
@@ -137,11 +137,11 @@ public class JSLBotBridge extends SLModule {
 
     @Override
     public Object weakInvoke(final String command, final Object... arguments) {
-        if (command.equalsIgnoreCase("IM")) {
+        if ("IM".equalsIgnoreCase(command)) {
             bot.im(new LLUUID((String) arguments[0]), (String) arguments[1]);
             return null;
         }
-        if (command.equalsIgnoreCase("GROUPINVITE")) {
+        if ("GROUPINVITE".equalsIgnoreCase(command)) {
             bot.api().groupInvite((String) arguments[0], (String) arguments[1], (String) arguments[2]);
             return null;
         }
