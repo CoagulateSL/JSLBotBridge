@@ -14,7 +14,7 @@ public class JSLBot extends SLModule {
     public final String commitId() { return JSLBotBuildInfo.COMMITID; }
     public final Date getBuildDate() { return JSLBotBuildInfo.BUILDDATE; }
 
-    net.coagulate.JSLBot.JSLBot bot=null;
+    net.coagulate.JSLBot.JSLBot bot;
 
     @Nullable
     @Override

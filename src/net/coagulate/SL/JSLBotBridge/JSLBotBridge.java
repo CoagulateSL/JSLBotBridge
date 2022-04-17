@@ -25,7 +25,7 @@ public class JSLBotBridge extends SLModule {
     public final String commitId() { return JSLBotBridgeBuildInfo.COMMITID; }
     public final Date getBuildDate() { return JSLBotBridgeBuildInfo.BUILDDATE; }
 
-    JSLBot bot=null;
+    JSLBot bot;
 
     @Nullable
     @Override
@@ -82,7 +82,7 @@ public class JSLBotBridge extends SLModule {
         //}
     }
 
-    private static BotConfig botconfig=null;
+    private static BotConfig botconfig;
     @Nonnull
     public static BotConfig getBotConfig() {
         if (botconfig==null) {
@@ -154,14 +154,14 @@ public class JSLBotBridge extends SLModule {
         return currentVersion;
     }
 
-    private static Thread recalcThread =null;
+    private static Thread recalcThread;
 
 
     private class RecalcThread extends Thread {
-        private int caseCorrections = 0;
-        private int renames = 0;
-        private int unknowns = 0;
-        private int noop = 0;
+        private int caseCorrections;
+        private int renames;
+        private int unknowns;
+        private int noop;
 
         public RecalcThread(final EventQueue event) {
             final Logger log = SL.log("AvatarNameRecalc");
