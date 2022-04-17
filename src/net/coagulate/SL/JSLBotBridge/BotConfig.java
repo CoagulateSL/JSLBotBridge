@@ -15,13 +15,13 @@ public class BotConfig extends Configuration {
     final Map<String,String> config=new HashMap<>();
     @Nullable
     @Override
-    public String get(String param) {
+    public String get(final String param) {
         return config.get(param);
     }
 
     @Override
-    public void put(String key, String value) {
-        config.put(key,value);
+    public void put(final String key, final String value) {
+        config.put(key, value);
     }
 
     @Override
