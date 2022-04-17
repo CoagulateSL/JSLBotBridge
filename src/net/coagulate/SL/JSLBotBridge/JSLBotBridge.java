@@ -212,15 +212,17 @@ public class JSLBotBridge extends SLModule {
                     unknowns++;
                 } else {
                     final User user = User.findUserKey(uuid);
-                    if (!user.getUsername().equals(username)) {
-                        if (!user.getUsername().equalsIgnoreCase(username)) {
+                    if (user.getUsername().equals(username)) {
+                        noop++;
+                    } else {
+                        if (user.getUsername().equalsIgnoreCase(username)) {
+                            caseCorrections++;
+                        } else {
                             SL.log("AvatarNameRecalc").info("Avatar rename for " + uuid + " from " + user.getUsername() + " to " + username);
                             renames++;
-                        } else {
-                            caseCorrections++;
                         }
                         user.setUsername(username);
-                    } else { noop++; }
+                    }
                 }
             }
         }
