@@ -40,11 +40,6 @@ public class JSLBot extends SLModule {
     public void startup() {}
 
     @Override
-    public Object weakInvoke(final String command, final Object... arguments) {
-        return null;
-    }
-
-    @Override
     protected int schemaUpgrade(final DBConnection db, final String schemaName, final int currentVersion) {
         return currentVersion;
     }
