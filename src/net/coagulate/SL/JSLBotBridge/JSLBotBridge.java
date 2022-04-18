@@ -188,8 +188,8 @@ public class JSLBotBridge extends SLModule {
                     }
                     if ((UnixTime.getUnixTime() - lastReport) > 60) {
                         lastReport = UnixTime.getUnixTime();
-                        final double usersPerSecond = (((double) processed) / ((double) (lastReport - startTime)));
-                        final double expectRunTime = ((double) (allUsers.size() - processed)) / usersPerSecond;
+                        final double usersPerSecond = (((double) processed) / (lastReport - startTime));
+                        final double expectRunTime = (allUsers.size() - processed) / usersPerSecond;
                         final int eta = (int) expectRunTime;
                         log.info("Processed " + processed + "/" + allUsers.size() + ".  ETA: " + UnixTime.duration(eta, true));
                     }
