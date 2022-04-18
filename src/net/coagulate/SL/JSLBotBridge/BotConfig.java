@@ -15,8 +15,8 @@ public class BotConfig extends Configuration {
     final Map<String,String> config=new HashMap<>();
     @Nullable
     @Override
-    public String get(final String param) {
-        return config.get(param);
+    public String get(final String key) {
+        return config.get(key);
     }
 
     @Override
