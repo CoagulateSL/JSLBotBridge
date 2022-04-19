@@ -14,7 +14,7 @@ public class JSLBot extends SLModule {
     public final String commitId() { return JSLBotBuildInfo.COMMITID; }
     public final Date getBuildDate() { return JSLBotBuildInfo.BUILDDATE; }
 
-    net.coagulate.JSLBot.JSLBot bot=null;
+    net.coagulate.JSLBot.JSLBot bot;
 
     @Nullable
     @Override
@@ -40,10 +40,7 @@ public class JSLBot extends SLModule {
     public void startup() {}
 
     @Override
-    public Object weakInvoke(String command, Object... arguments) { return null; }
-
-    @Override
-    protected int schemaUpgrade(DBConnection db, String schemaName, int currentVersion) {
+    protected int schemaUpgrade(final DBConnection db, final String schemaName, final int currentVersion) {
         return currentVersion;
     }
 }
