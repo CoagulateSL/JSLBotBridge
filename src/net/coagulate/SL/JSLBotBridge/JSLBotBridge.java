@@ -47,6 +47,7 @@ public class JSLBotBridge extends SLModule {
 		if (bot!=null) {
 			final JSLBot reference=bot;
 			bot=null;
+			reference.clearAlwaysReconnect();
 			reference.shutdown("SL System is shutting down");
 		}
 	}
