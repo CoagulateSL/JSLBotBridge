@@ -58,7 +58,11 @@ public class JSLBotBridge extends SLModule {
 		//}
 	}
 	
-	public void initialise() {
+	public boolean initialise() {
+		if (getBotConfig().get("password")==null || getBotConfig().get("password").isEmpty())
+		{
+			return false;
+		}
 		for (final Method method: ClassTools.getAnnotatedMethods(JSLBot.CmdHelp.class)) {
 			boolean warned=false;
 			boolean firstParam=true;
@@ -80,6 +84,7 @@ public class JSLBotBridge extends SLModule {
 		bot.registershutdownhook=false;
 		bot.alwaysReconnect=true;
 		bot.start();
+		return true;
 	}
 	
 	@Override

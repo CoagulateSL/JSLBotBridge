@@ -36,7 +36,8 @@ public class JSLBot extends SLModule {
 	public void startup() {
 	}
 	
-	public void initialise() {
+	public boolean initialise() {
+		return true;
 	}
 	
 	@Override
