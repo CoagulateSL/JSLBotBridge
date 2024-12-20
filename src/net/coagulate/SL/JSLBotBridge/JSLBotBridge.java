@@ -242,10 +242,7 @@ public class JSLBotBridge extends SLModule {
 							noop++;
 						} else {
 							// deleted user rename to their uuid
-							SL.log("AvatarNameRecalc").warning("Failed to get an avatar name for "+uuid);
-							SL.log("AvatarNameRecalc")
-							  .info("Avatar rename to UUID due to not-found for "+uuid+", relinquishing name "+
-							        user.getUsername());
+							SL.log("AvatarNameRecalc").warning("Failed to get an avatar name for "+uuid+", freeing username "+user.getUsername());
 							unknowns++;
 							user.setUsername(uuid);
 						}
@@ -258,7 +255,10 @@ public class JSLBotBridge extends SLModule {
 							  .info("Avatar rename for "+uuid+" from "+user.getUsername()+" to "+username);
 							renames++;
 						}
-						user.setUsername(username);
+						try { user.setUsername(username); }
+						catch (final Exception e) {
+							SL.log("AvatarNameRecalc").warning("FAILED renaming "+uuid+" from "+user.getUsername()+" to "+username+" - "+e.getLocalizedMessage());
+						}
 					}
 				}
 				
