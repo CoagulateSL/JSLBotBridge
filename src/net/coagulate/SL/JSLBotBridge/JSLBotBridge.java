@@ -229,14 +229,28 @@ public class JSLBotBridge extends SLModule {
 			for (final Map.Entry<String,String> entry: map.entrySet()) {
 				final String uuid=entry.getKey();
 				final String username=entry.getValue();
-				if (username==null) {
-					SL.log("AvatarNameRecalc").warning("Failed to get an avatar name for "+uuid);
-					unknowns++;
+				final User user=User.findUserKey(uuid);
+				if (user.getUsername().equals(username)) {
+					// name matches result
+					noop++;
 				} else {
-					final User user=User.findUserKey(uuid);
-					if (user.getUsername().equals(username)) {
-						noop++;
+					// doesn't match query
+					if (username==null) {
+						// query returned null ; user deleted!
+						if (user.getUsername().equalsIgnoreCase(uuid)) {
+							// deleted user already named after their uuid
+							noop++;
+						} else {
+							// deleted user rename to their uuid
+							SL.log("AvatarNameRecalc").warning("Failed to get an avatar name for "+uuid);
+							SL.log("AvatarNameRecalc")
+							  .info("Avatar rename to UUID due to not-found for "+uuid+", relinquishing name "+
+							        user.getUsername());
+							unknowns++;
+							user.setUsername(uuid);
+						}
 					} else {
+						// not null and different, case correction or rename
 						if (user.getUsername().equalsIgnoreCase(username)) {
 							caseCorrections++;
 						} else {
@@ -247,6 +261,7 @@ public class JSLBotBridge extends SLModule {
 						user.setUsername(username);
 					}
 				}
+				
 			}
 		}
 	}
