@@ -1,0 +1,6 @@
+[submodule "JSLBot"]
+	path = JSLBot
+	url = https://github.com/CoagulateSL/JSLBot
+[submodule "SLCore"]
+	path = SLCore
+	url = https://github.com/CoagulateSL/SLCore
