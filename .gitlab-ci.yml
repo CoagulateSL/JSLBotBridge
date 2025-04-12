@@ -13,5 +13,5 @@ update-job:
     - git submodule update --remote --recursive || exit 1
     - git config --global user.name 'GitLab bot' || exit 1
     - git config --global user.email 'gitlabbot@predestined.net' || exit 1
-    - git commit -am "Updated GPHUD" && git push || echo "No changes to commit" || exit 1
+    - git commit -am "Updated JSLBotBridge" && git push || echo "No changes to commit" || exit 1
     - cd .. || exit 1
