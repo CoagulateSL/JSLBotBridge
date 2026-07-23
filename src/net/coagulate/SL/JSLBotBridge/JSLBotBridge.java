@@ -113,6 +113,9 @@ public class JSLBotBridge extends SLModule {
 			bot.api().groupInvite((String)arguments[0],(String)arguments[1],(String)arguments[2]);
 			return null;
 		}
+		if ("GROUPNOTICE".equalsIgnoreCase(command)) {
+			bot.api().groupNotice((String)arguments[0],(String)arguments[1],(String)arguments[2]);
+		}
 		return super.weakInvoke(command,arguments);
 	}
 	
